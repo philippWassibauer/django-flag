@@ -39,7 +39,7 @@ def _post_create_email_notify_managers(sender, instance, created, **kwargs):
         accused = instance.flagged_content.creator
         accusation = instance.comment
         informant = instance.flagged_content.creator
-        flagged_object = unicode(instance.flagged_content.content_object)
+        flagged_object = instance.flagged_content.content_object
         flagged_object_url = None
         if hasattr(flagged_object, 'get_absolute_url'):
             flagged_object_url = flagged_object.get_absolute_url()
