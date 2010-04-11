@@ -27,7 +27,7 @@ def flag(request):
         creator = None
     
     add_flag(request.user, content_type, object_id, creator, comment)
-    messages.success(request_("You have added a flag. "\
+    messages.success(request, _("You have added a flag. "\
         "A moderator will review your submission shortly."))
     
     if next:
