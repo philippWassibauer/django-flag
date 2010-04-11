@@ -3,8 +3,8 @@ from django.core.mail import mail_managers
 from django.db.models import get_model
 from django.db.models.signals import post_save
 
-EMAIL_NOTIFY_CREATOR = getattr('settings', 'FLAG_EMAIL_NOTIFY_CREATOR', False)
-EMAIL_NOTIFY_MANAGERS = getattr('settings', 'FLAG_EMAIL_NOTIFY_MANAGERS', False)
+EMAIL_NOTIFY_CREATOR = getattr(settings, 'FLAG_EMAIL_NOTIFY_CREATOR', False)
+EMAIL_NOTIFY_MANAGERS = getattr(settings, 'FLAG_EMAIL_NOTIFY_MANAGERS', False)
 
 
 def _post_create_email_notify_creator(sender, instance, created, **kwargs):
