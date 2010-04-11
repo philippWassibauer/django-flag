@@ -60,7 +60,9 @@ def start_listening():
     flag_instance_model = get_model('flag', 'FlagInstance')
 
     if EMAIL_NOTIFY_CREATOR and not settings.DEBUG:
-        post_save.connect(_post_create_email_notify_creator, sender=flag_instance_model)
+        post_save.connect(_post_create_email_notify_creator,
+            sender=flag_instance_model)
 
     if EMAIL_NOTIFY_MANAGERS and not settings.DEBUG:
-        post_save.connect(_post_create_email_notify_managers, sender=flag_instance_model)
+        post_save.connect(_post_create_email_notify_managers, 
+            sender=flag_instance_model)
