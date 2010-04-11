@@ -29,7 +29,7 @@ Accusation: "%s"
 
 """ % (accused, flagged_object, accusation)
 
-        accused.send_mail(subject, message)
+        accused.email_user(subject, message)
 
 
 def start_listening():
