@@ -4,7 +4,7 @@ from django.db.models import get_model
 from django.db.models.signals import post_save
 
 EMAIL_NOTIFY_CREATOR = getattr('settings', 'FLAG_EMAIL_NOTIFY_CREATOR', False)
-EMAIL_NOTIFY_MANAGERS = gettattr('settings', 'FLAG_EMAIL_NOTIFY_MANAGERS', False)
+EMAIL_NOTIFY_MANAGERS = getattr('settings', 'FLAG_EMAIL_NOTIFY_MANAGERS', False)
 
 
 def _post_create_email_notify_creator(sender, instance, created, **kwargs):
@@ -20,7 +20,6 @@ def _post_create_email_notify_creator(sender, instance, created, **kwargs):
 """
 Content: "%s"
 Accusation: "%s"
-
 """ % (accused, flagged_object, accusation)
 
         accused.email_user(subject, message)
@@ -46,7 +45,6 @@ Content URL: "%s"
 Informant: "%s"
 Accused: "%s"
 Accusation: "%s"
-
 """ % (flagged_object, flagged_object_url, informant, accused, accusation)
 
         mail_managers(subject, message)
