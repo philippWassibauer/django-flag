@@ -1,11 +1,10 @@
 from datetime import datetime
 
-from django.db import models
-
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-
-from django.contrib.auth.models import User
+from django.db import models
+from flag import listeners
 
 
 STATUS = (
@@ -15,6 +14,7 @@ STATUS = (
     ('4', 'content removed by creator'),
     ('5', 'content removed by moderator'),
 )
+
 
 class FlaggedContent(models.Model):
     
@@ -37,7 +37,6 @@ class FlagInstance(models.Model):
 
 
 def add_flag(flagger, content_type, object_id, content_creator, comment):
-    
     # check if it's already been flagged
     try:
         flagged_content = FlaggedContent.objects.get(content_type=content_type, object_id=object_id)
@@ -49,3 +48,6 @@ def add_flag(flagger, content_type, object_id, content_creator, comment):
     flag_instance.save()
     
     return flag_instance
+
+
+listeners.start_listening()
