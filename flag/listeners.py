@@ -35,5 +35,5 @@ Accusation: "%s"
 def start_listening():
     flag_instance_model = get_model('flag', 'FlagInstance')
 
-    if flag_instance_model and EMAIL_NOTIFY_CREATOR:
+    if EMAIL_NOTIFY_CREATOR and not settings.DEBUG:
         post_save.connect(_post_create_email_notify_creator, sender=flag_instance_model)
