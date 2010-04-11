@@ -18,6 +18,12 @@ def _post_create_email_notify_creator(sender, instance, created, **kwargs):
         subject = """"%s" got flagged as inappropriate""" % flagged_object
         message = \
 """
+Dear %s,
+
+we received an accusation concerning your content. If you share the accusation,
+please change or delete your content so that everyone is happy again. Our staff
+also got informed and will check if you stuck to our terms of use.
+
 Content: "%s"
 Accusation: "%s"
 """ % (accused, flagged_object, accusation)
