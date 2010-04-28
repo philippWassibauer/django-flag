@@ -1,19 +1,12 @@
 from datetime import datetime
 
-<<<<<<< HEAD
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
-from flag import listeners
-=======
-from django.db import models
-
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
->>>>>>> upstream/master
+
+from flag import listeners
 
 
 STATUS = (
