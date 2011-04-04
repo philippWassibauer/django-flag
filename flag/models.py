@@ -19,9 +19,14 @@ STATUS = getattr(settings, "FLAG_STATUSES", [
     ("5", _("content removed by moderator")),
 ])
 
+FLAG_TYPES = getattr(settings, "FLAG_TYPES", [
+    ("0", _("Choose")),
+    ("1", _("Spam")),
+    ("2", _("Sexual Content")),
+])
+
 
 class FlaggedContent(models.Model):
-    
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey("content_type", "object_id")
@@ -33,16 +38,17 @@ class FlaggedContent(models.Model):
     
     class Meta:
         unique_together = [("content_type", "object_id")]
+        ordering = ("-count", )
 
 
 class FlagInstance(models.Model):
-    
     flagged_content = models.ForeignKey(FlaggedContent)
     user = models.ForeignKey(User) # user flagging the content
     when_added = models.DateTimeField(default=datetime.now)
     when_recalled = models.DateTimeField(null=True) # if recalled at all
     comment = models.TextField() # comment by the flagger
-
+    type = models.CharField(max_length=1, choices=FLAG_TYPES, default="0")
+    
 
 def add_flag(flagger, content_type, object_id, content_creator, comment, status=None):
     

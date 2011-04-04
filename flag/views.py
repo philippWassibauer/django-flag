@@ -1,13 +1,19 @@
 from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
-
+from django.contrib import messages
 from flag.models import add_flag
 
-
+@login_required
+def flag_moderation(request, template_name="flag/moderation.html"):
+    return render_to_response(template_name, {
+        
+    }, context_instance=RequestContext(request))
+    
+    
 @login_required
 def flag(request):
     
@@ -15,6 +21,7 @@ def flag(request):
     object_id = request.POST.get("object_id")
     creator_field = request.POST.get("creator_field")
     comment = request.POST.get("comment")
+    type = request.POST.get("type")
     next = request.POST.get("next")
     
     content_type = get_object_or_404(ContentType, id = int(content_type))
@@ -27,10 +34,12 @@ def flag(request):
     else:
         creator = None
     
-    add_flag(request.user, content_type, object_id, creator, comment)
-    request.user.message_set.create(
-        message = _("You have added a flag. A moderator will review your "
-            "submission shortly.")
+    flag_instance = add_flag(request.user, content_type, object_id, creator, comment)
+    flag_instance.type = type
+    flag_instance.save()
+    
+    messages.success(request, _("You have added a flag. A moderator will review your "
+        "submission shortly.")
     )
     
     if next:
