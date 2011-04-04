@@ -1,16 +1,12 @@
 from datetime import datetime
-
 from django.conf import settings
 from django.db import models
-
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
-from flag import listeners
-
+from flag import listeners, signals
 
 STATUS = (
     ("1", _("flagged")),
@@ -18,7 +14,7 @@ STATUS = (
     ("3", _("creator notified")),
     ("4", _("content removed by creator")),
     ("5", _("content removed by moderator")),
-])
+)
 
 FLAG_TYPES = getattr(settings, "FLAG_TYPES", [
     ("0", _("Choose")),
@@ -52,7 +48,7 @@ class FlagInstance(models.Model):
     
 
 
-def add_flag(flagger, content_type, object_id, content_creator, comment):
+def add_flag(flagger, content_type, object_id, content_creator, comment, status=None):
     # check if it's already been flagged
     defaults = dict(creator=content_creator)
     if status is not None:
