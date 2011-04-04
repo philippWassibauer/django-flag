@@ -3,8 +3,10 @@ from django.shortcuts import render_to_response, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
-from django.utils.translation import ugettext as _
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
+
 from flag.models import add_flag
 
 @login_required
@@ -16,7 +18,6 @@ def flag_moderation(request, template_name="flag/moderation.html"):
     
 @login_required
 def flag(request):
-    
     content_type = request.POST.get("content_type")
     object_id = request.POST.get("object_id")
     creator_field = request.POST.get("creator_field")

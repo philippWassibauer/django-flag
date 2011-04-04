@@ -3,9 +3,13 @@ django-flag
 
 This app lets users of your site flag content as inappropriate or spam.
 
-By default some choices for status are available, however if you'd like to
-customize them you can provide a ``FLAG_STATUSES`` setting which is a list of
-two tuples where the first item is the value (a one character string) and the
-second is the readable value.  The default choice should have a key of ``"1"``.
-
 (more here soon)
+
+
+
+Settings
+======
+FLAG_EMAIL_NOTIFY_CREATOR: Set to True if you want to send a mail to the creator once his content got flagged (Default: False).
+FLAG_EMAIL_NOTIFY_MANAGERS: Set to True if you want to send a mail to all managers once content got flagged (Default: False).
+
+Email notification only works when DEBUG is set to False.

@@ -6,12 +6,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from flag import signals
+from flag import listeners
 
 
-STATUS = getattr(settings, "FLAG_STATUSES", [
+STATUS = (
     ("1", _("flagged")),
     ("2", _("flag rejected by moderator")),
     ("3", _("creator notified")),
@@ -50,8 +51,8 @@ class FlagInstance(models.Model):
     type = models.CharField(max_length=1, choices=FLAG_TYPES, default="0")
     
 
-def add_flag(flagger, content_type, object_id, content_creator, comment, status=None):
-    
+
+def add_flag(flagger, content_type, object_id, content_creator, comment):
     # check if it's already been flagged
     defaults = dict(creator=content_creator)
     if status is not None:
@@ -82,3 +83,6 @@ def add_flag(flagger, content_type, object_id, content_creator, comment, status=
     )
     
     return flag_instance
+
+
+listeners.start_listening()
